@@ -29,9 +29,15 @@ Implement an User Authentication System in order to access the jokes from the Jo
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. What is the purpose of using _sessions_?
+    Sessions are used to persist data across requests, for example authentication, so a user does not need to log in each time they'd like to access a new dataset or page, request, etc.
 1. What does bcrypt do to help us store passwords in a secure manner.
+    Bcrypt allows us to cumulatively hash passwords for secure storage.  We can also automatically and manually add salting to add a level of security.
+
 1. What does bcrypt do to slow down attackers?
+    In order to access the password, an attacker needs to know the hash, the algorithm used, and how many times the password was hashed.
+
 1. What are the three parts of the JSON Web Token?
+    Header, payload, signature
 
 ## Project Set Up
 
@@ -54,17 +60,17 @@ Follow these steps for completing your project:
 
 Helpful Tip on Testing this Project:
 
-- [ ] **TEST** this project using **`POSTMAN`**.
+- [X] **TEST** this project using **`POSTMAN`**.
 
 ## Minimum Viable Product
 
-- [ ] Implement the `register` function inside `/config/routes.js`.
-- [ ] Implement the `login` function inside `/config/routes.js`.
-- [ ] Use JSON Web Tokens for authentication.
+- [X] Implement the `register` function inside `/config/routes.js`.
+- [X] Implement the `login` function inside `/config/routes.js`.
+- [X] Use JSON Web Tokens for authentication.
 
 **Note** The migrations and a database with empty users is already included
 
-- [ ] Add the authentication related code. If everything is done correctly, visiting `/api/jokes` should return a list of jokes.
+- [X] Add the authentication related code. If everything is done correctly, visiting `/api/jokes` should return a list of jokes.
 
 ## Stretch Problem: Build a front end to interface with your User Auth System
 
