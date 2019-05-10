@@ -1,4 +1,5 @@
 const axios = require('axios');
+require('dotenv').config()
 
 const { authenticate } = require('../auth/authenticate');
 const db = require('../database/dbConfig.js')
@@ -16,12 +17,13 @@ function generateToken(user) {
     userID: user.id,
     username: user.username
   }
+  const secret = process.env.JWT_SECRET
 
   const options = {
     expiresIn: '1h'
   }
 
-  return jwt.sign(payload, secrets.jwtSecret, options)
+  return jwt.sign(payload, secret.jwtSecret, options)
 }
 
 function register(req, res) {
@@ -31,7 +33,7 @@ function register(req, res) {
   user.password = hash
 
   const token = generateToken(user)
-  Users.add(user)
+  Users.insert(user)
     .then(saved => {
       saved.token = token
       res.status(201).json(saved)
