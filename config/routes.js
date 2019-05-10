@@ -6,15 +6,9 @@ const db = require('../database/dbConfig.js')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
-module.exports = server => {
-  server.post('/api/register', register);
-  server.post('/api/login', login);
-  server.get('/api/jokes', authenticate, getJokes);
-};
-
 function generateToken(user) {
   const payload = {
-    userID: user.id,
+    subject: user.id,
     username: user.username
   }
   const secret = process.env.JWT_SECRET
@@ -26,22 +20,28 @@ function generateToken(user) {
   return jwt.sign(payload, secret, options)
 }
 
+module.exports = server => {
+  server.post('/api/register', register);
+  server.post('/api/login', login);
+  server.get('/api/jokes', authenticate, getJokes);
+};
+
+
 function register(req, res) {
   // implement user registration
-  const user = req.body
+  let user = req.body
   const hash = bcrypt.hashSync(user.password, 10)
   user.password = hash
 
   const token = generateToken(user)
-  db('users')
-    .insert(user)
-    .then(res => {
-      res.token = token
-      res.status(201).json(res)
+  Users.add(user)
+    .then(saved => {
+      saved.token = token
+      res.status(201).json(saved);
     })
-    .catch(err => {
-      res.status(500).json(err)
-    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
 }
 
 function login(req, res) {
