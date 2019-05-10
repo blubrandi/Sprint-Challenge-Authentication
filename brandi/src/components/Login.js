@@ -54,7 +54,7 @@ class Login extends React.Component {
             .post(endpoint, this.state)
             .then(res => {
                 localStorage.setItem('jwt', res.data.token);
-                this.props.history.push('/users');
+                this.props.history.push('/jokes');
             })
             .catch(err => {
                 console.error('Login Error', err);

@@ -7,14 +7,20 @@ import Login from './components/Login'
 import Jokes from './components/Jokes'
 
 
-function App() {
+function App(props) {
+
+  function logout() {
+    localStorage.removeItem('jwt')
+    props.history.push('/login')
+  }
+
   return (
     <div className="App">
       <header>
         <NavLink to='/register'>Register | </NavLink>
         <NavLink to='/login'>Login | </NavLink>
         <NavLink to='/jokes'>Jokes | </NavLink>
-        {/* <div onClick={logout}>Logout</div> */}
+        <div onClick={logout}>Logout</div>
       </header>
       <main>
         <Route path='/register' component={Register} />
@@ -25,4 +31,4 @@ function App() {
   );
 }
 
-export default App;
+export default withRouter(App)
