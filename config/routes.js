@@ -1,6 +1,9 @@
 const axios = require('axios');
 
 const { authenticate } = require('../auth/authenticate');
+const db = require('../database/dbConfig.js')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
 module.exports = server => {
   server.post('/api/register', register);
@@ -23,6 +26,19 @@ function generateToken(user) {
 
 function register(req, res) {
   // implement user registration
+  const user = req.body
+  const hash = bcrypt.hashSync(user.password, 10)
+  user.password = hash
+
+  const token = generateToken(user)
+  Users.add(user)
+    .then(saved => {
+      saved.token = token
+      res.status(201).json(saved)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
 }
 
 function login(req, res) {
