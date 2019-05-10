@@ -8,6 +8,19 @@ module.exports = server => {
   server.get('/api/jokes', authenticate, getJokes);
 };
 
+function generateToken(user) {
+  const payload = {
+    userID: user.id,
+    username: user.username
+  }
+
+  const options = {
+    expiresIn: '1h'
+  }
+
+  return jwt.sign(payload, secrets.jwtSecret, options)
+}
+
 function register(req, res) {
   // implement user registration
 }
