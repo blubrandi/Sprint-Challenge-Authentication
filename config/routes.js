@@ -43,6 +43,24 @@ function register(req, res) {
 
 function login(req, res) {
   // implement user login
+  const { username, password } = req.body
+
+  Users.findBy({ username })
+    .first()
+    .then(user => {
+      const token = generateToke(user)
+      if (user && bcrypt.compareSync(password, user.password)) {
+        res.status(200).json({
+          message: `Welcome ${user.username}`,
+          token
+        })
+      } else {
+        res.status(401).json({ message: 'Your login information is not correct.' })
+      }
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
 }
 
 function getJokes(req, res) {
