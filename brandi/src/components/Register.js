@@ -48,7 +48,7 @@ class Register extends React.Component {
 
     submitForm = event => {
         event.preventDefault();
-        const endpoint = 'http://localhost:3300/api/auth/register';
+        const endpoint = 'http://localhost:3300/api/register';
 
         axios
             .post(endpoint, this.state)
