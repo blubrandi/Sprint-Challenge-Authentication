@@ -23,7 +23,7 @@ function generateToken(user) {
     expiresIn: '1h'
   }
 
-  return jwt.sign(payload, secret.jwtSecret, options)
+  return jwt.sign(payload, secret, options)
 }
 
 function register(req, res) {
@@ -33,10 +33,11 @@ function register(req, res) {
   user.password = hash
 
   const token = generateToken(user)
-  Users.insert(user)
-    .then(saved => {
-      saved.token = token
-      res.status(201).json(saved)
+  db('users')
+    .insert(user)
+    .then(res => {
+      res.token = token
+      res.status(201).json(res)
     })
     .catch(err => {
       res.status(500).json(err)
