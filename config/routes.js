@@ -48,7 +48,8 @@ function login(req, res) {
   // implement user login
   const { username, password } = req.body
 
-  Users.findBy({ username })
+  db('users')
+    .where({ username })
     .first()
     .then(user => {
       const token = generateToke(user)
